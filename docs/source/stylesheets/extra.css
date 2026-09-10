@@ -1,0 +1,4 @@
+/* Ensure carousel examples display correctly */
+.bs-example .carousel {
+    margin-bottom: 2rem;
+}
