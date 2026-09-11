@@ -97,3 +97,128 @@ def test_the_library_will_not_install_without_it():
 def test_the_library_renders_constant_inputs_correctly(render, source, fragment):
     """`is True` in one, `re` in the other: the two ways the proxy shows up."""
     assert fragment in render(source)
+
+
+def pair():
+    """The same component on two engines, one with the extension and one without."""
+    engines = []
+    for extensions in ([], [citry_bootstrap.PlainInputs]):
+        app = Citry(autodiscover=False, extensions=extensions)
+
+        class Child(LibraryComponent):
+            name = "child"
+
+            class Kwargs:
+                x: object = None
+                y: object = None
+
+            def template_data(self, kwargs, slots):
+                return {"x": kwargs.x, "y": kwargs.y, "both": [kwargs.x, kwargs.y]}
+
+            template = '<i c-data-x="x" c-data-y="y">{{ both }}</i>'
+
+        class Parent(LibraryComponent):
+            name = "parent"
+
+            class Kwargs:
+                x: object = None
+                y: object = None
+
+            def template_data(self, kwargs, slots):
+                return {"x": kwargs.x, "y": kwargs.y, "flip": kwargs.y}
+
+            template = '<div c-data-x="x"><c-child c-x="x" c-y="flip" /></div>'
+
+        app.register_library(ComponentLibrary(name="pair", components=[Parent, Child]))
+        engines.append(app)
+    return engines
+
+
+VALUES = ["'a'", "'b-c'", "True", "False", "None", "3", "[1, 2]", "''"]
+_CID = re.compile(r'\s*data-cid-[\w-]+="[^"]*"')
+
+
+def test_the_output_is_what_citry_would_have_rendered():
+    """Whatever the extension does to the values, the html may not move."""
+    import random
+
+    stock, plain = pair()
+    random.seed(11)
+    for _ in range(300):
+        x, y = random.choice(VALUES), random.choice(VALUES)
+        live = random.choice([True, False])
+        source = f'<c-{random.choice(["parent", "child"])} c-x="{x}" c-y="{"v" if live else y}" />'
+        variables = {"v": eval(y)}  # noqa: S307 - the test's own literals
+        assert _CID.sub("", stock.render_template(source, variables).serialize()) == _CID.sub(
+            "", plain.render_template(source, variables).serialize()
+        )
+
+
+def test_two_renders_of_one_component_do_not_share_state():
+    """The marks are per render; a second render must not see the first's."""
+    _, plain = pair()
+    first = plain.render_template('<c-child c-x="True" c-y="v" />', {"v": 1}).serialize()
+    second = plain.render_template('<c-child c-x="True" c-y="v" />', {"v": 2}).serialize()
+    assert 'data-y="1"' in first
+    assert 'data-y="2"' in second
+
+
+def test_renders_in_parallel_do_not_cross(probe):
+    """State lives on the component instance, so threads cannot see each other's."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    probe.render_template('<c-probe c-flag="True" text="warm" />').serialize()
+
+    def render(n):
+        return probe.render_template(f'<c-probe c-flag="True" text="t{n}" />').serialize()
+
+    with ThreadPoolExecutor(max_workers=16) as pool:
+        out = list(pool.map(render, range(300)))
+    assert [n for n, html in enumerate(out) if f">t{n}<" not in html] == []
+
+
+def test_a_component_that_renders_itself(probe):
+    app = Citry(autodiscover=False, extensions=[citry_bootstrap.PlainInputs])
+
+    class Deep(LibraryComponent):
+        name = "deep"
+
+        class Kwargs:
+            left: object = None
+            label: object = None
+
+        def template_data(self, kwargs, slots):
+            assert not is_const(kwargs.label)
+            return {"left": kwargs.left, "inner": kwargs.left > 0, "label": kwargs.label}
+
+        template = (
+            '<div c-data-label="label"><c-deep c-if="inner" c-left="left - 1" label="x" /></div>'
+        )
+
+    app.register_library(ComponentLibrary(name="deep", components=[Deep]))
+    html = app.render_template('<c-deep c-left="40" label="x" />').serialize()
+    assert html.count("data-label") == 41
+
+
+@pytest.mark.parametrize(
+    ("template_data", "source"),
+    [
+        (lambda self, kwargs, slots: None, '<c-edge c-a="True" />'),
+        (lambda self, kwargs, slots: {"a": kwargs.a}, "<c-edge />"),
+    ],
+)
+def test_a_component_with_nothing_to_mark(template_data, source):
+    """No inputs, or no data returned, must not reach into an empty mapping."""
+    app = Citry(autodiscover=False, extensions=[citry_bootstrap.PlainInputs])
+    edge = type(
+        "Edge",
+        (LibraryComponent,),
+        {
+            "name": "edge",
+            "Kwargs": type("Kwargs", (), {"__annotations__": {"a": object}, "a": None}),
+            "template_data": template_data,
+            "template": "<i>x</i>",
+        },
+    )
+    app.register_library(ComponentLibrary(name="edge", components=[edge]))
+    assert "<i" in app.render_template(source).serialize()
