@@ -34,7 +34,6 @@ def engine() -> Citry:
     ids = count(1)
     app = Citry(
         autodiscover=False,
-        extensions=[citry_bootstrap.PlainValues],
         id_generator=lambda: f"ctest{next(ids):02d}",
     )
     citry_bootstrap.install(app)
@@ -95,8 +94,7 @@ def index(names: list[str]) -> str:
         "## Install\n",
         "```bash\npip install citry-bootstrap\n```\n",
         "```python\nimport citry_bootstrap\nfrom citry import Citry\n\n"
-        "app = Citry(extensions=[citry_bootstrap.PlainValues])\n"
-        "citry_bootstrap.install(app)\n```\n",
+        "app = Citry()\ncitry_bootstrap.install(app)\n```\n",
         "## Components\n",
     ]
     lines += [f"- [{name}](components/{name.lower()}.md)" for name in sorted(names)]

@@ -17,7 +17,7 @@ _CID_VALUE = re.compile(r"data-cid-(\w+)")
 
 @pytest.fixture(scope="session")
 def app():
-    engine = Citry(autodiscover=False, extensions=[citry_bootstrap.PlainValues])
+    engine = Citry(autodiscover=False)
     citry_bootstrap.install(engine)
     return engine
 

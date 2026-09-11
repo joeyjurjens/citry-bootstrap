@@ -130,7 +130,6 @@ from citry_bootstrap.components.bootstrap5.toast import (
 )
 from citry_bootstrap.components.bootstrap5.toggle_button import ToggleButton, ToggleButtonGroup
 from citry_bootstrap.components.bootstrap5.tooltip import Tooltip
-from citry_bootstrap.extension import PlainValues
 
 #: Every component is published under this prefix; `install(alias=...)` adds more.
 PREFIX = "bs-"
@@ -258,7 +257,6 @@ __citry_library__ = ComponentLibrary(
         ToggleButton,
         Tooltip,
     ),
-    required_extensions=("plain_values",),
 )
 
 
@@ -296,7 +294,6 @@ def library(
     return ComponentLibrary(
         name="citry-bootstrap",
         components=tuple(_republished(c, prefix, override) for c in __citry_library__.components),
-        required_extensions=("plain_values",),
     )
 
 

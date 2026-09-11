@@ -1,4 +1,6 @@
-from citry import LibraryComponent, SlotInput, merge_attrs
+from types import SimpleNamespace
+
+from citry import LibraryComponent, SlotInput, const_value, merge_attrs
 
 from citry_bootstrap.components.bootstrap5.types import (
     AlignmentStartEnd,
@@ -10,6 +12,19 @@ from citry_bootstrap.components.bootstrap5.types import (
     Size,
     VariantWithLink,
 )
+
+
+def _plain(kwargs):
+    """The component's inputs as ordinary Python values.
+
+    Citry marks a template constant with a transparent proxy. It compares and
+    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
+    reject it and `x is True` is False. Unwrapping here rather than at the
+    engine's input hook leaves citry's own constness intact, so a cached
+    component stays cached.
+    """
+    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
+    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
 
 
 class Dropdown(LibraryComponent):
@@ -25,6 +40,7 @@ class Dropdown(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         dropdown_id = (kwargs.attrs or {}).get("id") or f"dropdown-{self.id}"
 
         if kwargs.centered:
@@ -76,6 +92,7 @@ class DropdownToggle(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         dropdown = self.inject("dropdown")
 
         classes = ["btn", f"btn-{kwargs.variant}", "dropdown-toggle"]
@@ -125,6 +142,7 @@ class DropdownMenu(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         classes = ["dropdown-menu"]
 
         if kwargs.align == "end":
@@ -176,6 +194,7 @@ class DropdownItem(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         classes = ["dropdown-item"]
         if kwargs.active:
             classes.append("active")
@@ -235,6 +254,7 @@ class DropdownDivider(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -257,6 +277,7 @@ class DropdownHeader(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs,
@@ -283,6 +304,7 @@ class DropdownItemText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }

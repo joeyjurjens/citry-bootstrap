@@ -16,11 +16,9 @@ pip install citry-bootstrap
 import citry_bootstrap
 from citry import Citry
 
-app = Citry(extensions=[citry_bootstrap.PlainValues])
+app = Citry()
 citry_bootstrap.install(app)
 ```
-
-Registration fails with a clear error if the extension is missing, so the two cannot drift apart. See [Plain values](#plain-values) for what it does.
 
 ## Use
 
@@ -66,20 +64,6 @@ citry_bootstrap.install(app, override={CardBody: MyCardBody})
 ```
 
 Yours is published under the same name, so every sibling renders it too - including `Card`, which builds its own body. The name follows `prefix`, so the two can be combined. Handing in something this library does not publish is an error rather than a silent no-op.
-
-## Plain values
-
-Citry marks a template constant with `Const`, a transparent proxy. It compares, stringifies and truth-tests like the value it wraps, but it is not that value: `os.fspath`, `re` and `str.join` reject it, and `x is True` is `False` - which is how `fluid=True` used to render as `container-True`.
-
-`PlainValues` unwraps those markers before `template_data` runs, so component code stays ordinary Python. The cost is that citry can no longer tell that an input was constant, so it will not cache a component's output. No component here declares a `Cache`, so nothing is lost; a library that does cache should unwrap at the point of use instead:
-
-```python
-from citry import const_value
-
-weight = const_value(kwargs.weight)
-```
-
-Remove the extension once citry stops leaking the marker into component inputs.
 
 ## Develop
 

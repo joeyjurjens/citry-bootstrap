@@ -1,6 +1,21 @@
-from citry import LibraryComponent, SlotInput, merge_attrs
+from types import SimpleNamespace
+
+from citry import LibraryComponent, SlotInput, const_value, merge_attrs
 
 from citry_bootstrap.components.bootstrap5.types import Size
+
+
+def _plain(kwargs):
+    """The component's inputs as ordinary Python values.
+
+    Citry marks a template constant with a transparent proxy. It compares and
+    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
+    reject it and `x is True` is False. Unwrapping here rather than at the
+    engine's input hook leaves citry's own constness intact, so a cached
+    component stays cached.
+    """
+    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
+    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
 
 
 class InputGroup(LibraryComponent):
@@ -15,6 +30,7 @@ class InputGroup(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         classes = ["input-group"]
         if kwargs.size:
             classes.append(f"input-group-{kwargs.size}")
@@ -45,6 +61,7 @@ class InputGroupText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -65,6 +82,7 @@ class InputGroupRadio(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -87,6 +105,7 @@ class InputGroupCheckbox(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -114,6 +133,7 @@ class FloatingLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "control_id": kwargs.control_id,
             "label": kwargs.label,

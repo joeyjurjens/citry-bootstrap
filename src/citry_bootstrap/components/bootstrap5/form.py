@@ -1,12 +1,26 @@
+from types import SimpleNamespace
 from typing import Literal
 
-from citry import LibraryComponent, SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, const_value, merge_attrs
 
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     FormCheckType,
     Size,
 )
+
+
+def _plain(kwargs):
+    """The component's inputs as ordinary Python values.
+
+    Citry marks a template constant with a transparent proxy. It compares and
+    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
+    reject it and `x is True` is False. Unwrapping here rather than at the
+    engine's input hook leaves citry's own constness intact, so a cached
+    component stays cached.
+    """
+    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
+    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
 
 
 class Form(LibraryComponent):
@@ -20,6 +34,7 @@ class Form(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         classes = []
         if kwargs.validated:
             classes.append("was-validated")
@@ -52,6 +67,7 @@ class FormGroup(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "control_id": kwargs.control_id,
@@ -80,6 +96,7 @@ class FormLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         if formgroup is not NOT_PROVIDED:
             for_value = kwargs.for_ or formgroup.control_id
@@ -135,6 +152,7 @@ class FormControl(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -206,6 +224,7 @@ class FormTextarea(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -267,6 +286,7 @@ class FormSelect(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -320,6 +340,7 @@ class FormCheckInput(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         formcheck = self.inject("formcheck", NOT_PROVIDED)
         if formcheck is not NOT_PROVIDED:
             control_id = formcheck.control_id
@@ -393,6 +414,7 @@ class FormCheckLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         formcheck = self.inject("formcheck", NOT_PROVIDED)
         if formcheck is not NOT_PROVIDED:
             control_id = kwargs.for_ if kwargs.for_ else formcheck.control_id
@@ -438,6 +460,7 @@ class FormCheck(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         wrapper_classes = []
         if kwargs.type == "switch":
             wrapper_classes.append("form-check form-switch")
@@ -497,6 +520,7 @@ class FormText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs or {},
         }
@@ -520,6 +544,7 @@ class FormFloating(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs or {},
         }

@@ -1,4 +1,6 @@
-from citry import LibraryComponent, SlotInput, merge_attrs
+from types import SimpleNamespace
+
+from citry import LibraryComponent, SlotInput, const_value, merge_attrs
 
 from citry_bootstrap.components.bootstrap5.types import (
     BackdropBehavior,
@@ -7,6 +9,19 @@ from citry_bootstrap.components.bootstrap5.types import (
     ResponsiveBreakpoint,
     SizeWithXl,
 )
+
+
+def _plain(kwargs):
+    """The component's inputs as ordinary Python values.
+
+    Citry marks a template constant with a transparent proxy. It compares and
+    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
+    reject it and `x is True` is False. Unwrapping here rather than at the
+    engine's input hook leaves citry's own constness intact, so a cached
+    component stays cached.
+    """
+    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
+    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
 
 
 class Modal(LibraryComponent):
@@ -29,6 +44,7 @@ class Modal(LibraryComponent):
         toggle: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         modal_id = (kwargs.attrs or {}).get("id") or f"modal-{self.id}"
 
         modal_classes = ["modal"]
@@ -103,6 +119,7 @@ class ModalHeader(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "close_button": kwargs.close_button,
             "close_label": kwargs.close_label,
@@ -132,6 +149,7 @@ class ModalBody(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -155,6 +173,7 @@ class ModalFooter(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -179,6 +198,7 @@ class ModalTitle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         modal = self.inject("modal")
         modal_id = modal.modal_id
 
@@ -210,6 +230,7 @@ class ModalToggle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         modal = self.inject("modal")
         target_id = modal.modal_id
 

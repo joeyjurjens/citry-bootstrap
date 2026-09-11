@@ -1,6 +1,7 @@
+from types import SimpleNamespace
 from typing import NamedTuple
 
-from citry import LibraryComponent, Markup, SlotInput, merge_attrs
+from citry import LibraryComponent, Markup, SlotInput, const_value, merge_attrs
 
 from citry_bootstrap.components.bootstrap5.types import NOT_PROVIDED, NavVariant
 from citry_bootstrap.text import slugify
@@ -9,6 +10,19 @@ from citry_bootstrap.text import slugify
 def _sibling(component, own, wanted):
     """A component of the same library, under whatever prefix it is published."""
     return component.citry.get(component.name.removesuffix(own) + wanted)
+
+
+def _plain(kwargs):
+    """The component's inputs as ordinary Python values.
+
+    Citry marks a template constant with a transparent proxy. It compares and
+    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
+    reject it and `x is True` is False. Unwrapping here rather than at the
+    engine's input hook leaves citry's own constness intact, so a cached
+    component stays cached.
+    """
+    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
+    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
 
 
 class TabContext(NamedTuple):
@@ -28,6 +42,7 @@ class TabContainer(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         container_id = (kwargs.attrs or {}).get("id") or f"tab-container-{self.id}"
 
         data = {
@@ -58,6 +73,7 @@ class TabContent(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs or {},
@@ -86,6 +102,7 @@ class TabPane(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         tab_container = self.inject("tab_container", NOT_PROVIDED)
 
         is_active = kwargs.active
@@ -144,6 +161,7 @@ class TabsRenderer(LibraryComponent):
         attrs: dict | None
 
     def template_data(self, kwargs: Kwargs, slots):
+        kwargs = _plain(kwargs)
         data = {
             "tabs_id": kwargs.tabs_id,
             "variant": kwargs.variant,
@@ -190,6 +208,7 @@ class Tabs(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         tabs_id = (kwargs.attrs or {}).get("id") or f"tabs-{self.id}"
         tab_data: list[dict] = []
 
@@ -251,6 +270,7 @@ class Tab(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
+        kwargs = _plain(kwargs)
         tabs_ctx: TabContext = self.inject("_tabs", NOT_PROVIDED)
         if tabs_ctx is NOT_PROVIDED:
             raise RuntimeError(
