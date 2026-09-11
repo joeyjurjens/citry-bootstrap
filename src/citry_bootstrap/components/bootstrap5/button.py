@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     ButtonType,
     Size,
@@ -8,7 +7,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Button(BootstrapComponent):
+class Button(LibraryComponent):
     name = "bs-button"
 
     class Kwargs:

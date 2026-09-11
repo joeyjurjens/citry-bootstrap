@@ -1,9 +1,7 @@
-from citry import SlotInput, merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, SlotInput, merge_attrs
 
 
-class Alert(BootstrapComponent):
+class Alert(LibraryComponent):
     name = "bs-alert"
 
     class Kwargs:
@@ -44,7 +42,7 @@ class Alert(BootstrapComponent):
     """
 
 
-class AlertLink(BootstrapComponent):
+class AlertLink(LibraryComponent):
     name = "bs-alert-link"
 
     class Kwargs:
@@ -71,7 +69,7 @@ class AlertLink(BootstrapComponent):
     """
 
 
-class AlertHeading(BootstrapComponent):
+class AlertHeading(LibraryComponent):
     name = "bs-alert-heading"
 
     class Kwargs:

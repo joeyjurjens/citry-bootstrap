@@ -1,9 +1,7 @@
-from citry import merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, merge_attrs
 
 
-class FormRange(BootstrapComponent):
+class FormRange(LibraryComponent):
     name = "bs-form-range"
 
     class Kwargs:

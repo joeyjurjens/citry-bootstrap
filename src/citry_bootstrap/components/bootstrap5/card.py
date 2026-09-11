@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     Alignment,
     CardImgVariant,
@@ -8,7 +7,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Card(BootstrapComponent):
+class Card(LibraryComponent):
     name = "bs-card"
 
     class Kwargs:
@@ -59,7 +58,7 @@ class Card(BootstrapComponent):
     """
 
 
-class CardHeader(BootstrapComponent):
+class CardHeader(LibraryComponent):
     name = "bs-card-header"
 
     class Kwargs:
@@ -82,7 +81,7 @@ class CardHeader(BootstrapComponent):
     """
 
 
-class CardBody(BootstrapComponent):
+class CardBody(LibraryComponent):
     name = "bs-card-body"
 
     class Kwargs:
@@ -105,7 +104,7 @@ class CardBody(BootstrapComponent):
     """
 
 
-class CardFooter(BootstrapComponent):
+class CardFooter(LibraryComponent):
     name = "bs-card-footer"
 
     class Kwargs:
@@ -128,7 +127,7 @@ class CardFooter(BootstrapComponent):
     """
 
 
-class CardTitle(BootstrapComponent):
+class CardTitle(LibraryComponent):
     name = "bs-card-title"
 
     class Kwargs:
@@ -153,7 +152,7 @@ class CardTitle(BootstrapComponent):
     """
 
 
-class CardSubtitle(BootstrapComponent):
+class CardSubtitle(LibraryComponent):
     name = "bs-card-subtitle"
 
     class Kwargs:
@@ -178,7 +177,7 @@ class CardSubtitle(BootstrapComponent):
     """
 
 
-class CardText(BootstrapComponent):
+class CardText(LibraryComponent):
     name = "bs-card-text"
 
     class Kwargs:
@@ -201,7 +200,7 @@ class CardText(BootstrapComponent):
     """
 
 
-class CardLink(BootstrapComponent):
+class CardLink(LibraryComponent):
     name = "bs-card-link"
 
     class Kwargs:
@@ -228,7 +227,7 @@ class CardLink(BootstrapComponent):
     """
 
 
-class CardImg(BootstrapComponent):
+class CardImg(LibraryComponent):
     name = "bs-card-img"
 
     class Kwargs:
@@ -262,7 +261,7 @@ class CardImg(BootstrapComponent):
     """
 
 
-class CardImgOverlay(BootstrapComponent):
+class CardImgOverlay(LibraryComponent):
     name = "bs-card-img-overlay"
 
     class Kwargs:
@@ -285,7 +284,7 @@ class CardImgOverlay(BootstrapComponent):
     """
 
 
-class CardGroup(BootstrapComponent):
+class CardGroup(LibraryComponent):
     name = "bs-card-group"
 
     class Kwargs:

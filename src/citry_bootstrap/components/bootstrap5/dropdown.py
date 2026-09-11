@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     AlignmentStartEnd,
     AnchorOrButton,
@@ -13,7 +12,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Dropdown(BootstrapComponent):
+class Dropdown(LibraryComponent):
     name = "bs-dropdown"
 
     class Kwargs:
@@ -62,7 +61,7 @@ class Dropdown(BootstrapComponent):
     """
 
 
-class DropdownToggle(BootstrapComponent):
+class DropdownToggle(LibraryComponent):
     name = "bs-dropdown-toggle"
 
     class Kwargs:
@@ -108,7 +107,7 @@ class DropdownToggle(BootstrapComponent):
     """
 
 
-class DropdownMenu(BootstrapComponent):
+class DropdownMenu(LibraryComponent):
     name = "bs-dropdown-menu"
 
     class Kwargs:
@@ -163,7 +162,7 @@ class DropdownMenu(BootstrapComponent):
     """
 
 
-class DropdownItem(BootstrapComponent):
+class DropdownItem(LibraryComponent):
     name = "bs-dropdown-item"
 
     class Kwargs:
@@ -229,7 +228,7 @@ class DropdownItem(BootstrapComponent):
     """
 
 
-class DropdownDivider(BootstrapComponent):
+class DropdownDivider(LibraryComponent):
     name = "bs-dropdown-divider"
 
     class Kwargs:
@@ -247,7 +246,7 @@ class DropdownDivider(BootstrapComponent):
     """
 
 
-class DropdownHeader(BootstrapComponent):
+class DropdownHeader(LibraryComponent):
     name = "bs-dropdown-header"
 
     class Kwargs:
@@ -274,7 +273,7 @@ class DropdownHeader(BootstrapComponent):
     """
 
 
-class DropdownItemText(BootstrapComponent):
+class DropdownItemText(LibraryComponent):
     name = "bs-dropdown-item-text"
 
     class Kwargs:

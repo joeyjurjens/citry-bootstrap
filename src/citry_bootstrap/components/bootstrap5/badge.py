@@ -1,9 +1,7 @@
-from citry import SlotInput, merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, SlotInput, merge_attrs
 
 
-class Badge(BootstrapComponent):
+class Badge(LibraryComponent):
     name = "bs-badge"
 
     class Kwargs:

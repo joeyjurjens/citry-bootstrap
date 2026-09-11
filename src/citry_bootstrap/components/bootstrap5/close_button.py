@@ -1,9 +1,7 @@
-from citry import merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, merge_attrs
 
 
-class CloseButton(BootstrapComponent):
+class CloseButton(LibraryComponent):
     name = "bs-close-button"
 
     class Kwargs:

@@ -1,10 +1,9 @@
-from citry import SlotInput
+from citry import LibraryComponent, SlotInput
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import AutoClose, Size, VariantWithLink
 
 
-class DropdownButton(BootstrapComponent):
+class DropdownButton(LibraryComponent):
     name = "bs-dropdown-button"
 
     class Kwargs:
@@ -49,7 +48,7 @@ class DropdownButton(BootstrapComponent):
     """
 
 
-class SplitButton(BootstrapComponent):
+class SplitButton(LibraryComponent):
     name = "bs-split-button"
 
     class Kwargs:

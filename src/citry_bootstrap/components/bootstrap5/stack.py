@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Breakpoint, StackDirection
 
 
-class Stack(BootstrapComponent):
+class Stack(LibraryComponent):
     name = "bs-stack"
 
     class Kwargs:

@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import ButtonTag
 
 
-class Collapse(BootstrapComponent):
+class Collapse(LibraryComponent):
     name = "bs-collapse"
 
     class Kwargs:
@@ -46,7 +45,7 @@ class Collapse(BootstrapComponent):
     """
 
 
-class CollapseToggle(BootstrapComponent):
+class CollapseToggle(LibraryComponent):
     name = "bs-collapse-toggle"
 
     class Kwargs:

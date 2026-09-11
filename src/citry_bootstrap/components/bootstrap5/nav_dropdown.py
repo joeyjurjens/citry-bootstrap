@@ -1,10 +1,9 @@
-from citry import SlotInput
+from citry import LibraryComponent, SlotInput
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import AutoClose
 
 
-class NavDropdown(BootstrapComponent):
+class NavDropdown(LibraryComponent):
     name = "bs-nav-dropdown"
 
     class Kwargs:

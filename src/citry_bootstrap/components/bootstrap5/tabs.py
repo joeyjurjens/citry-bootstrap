@@ -1,8 +1,7 @@
 from typing import NamedTuple
 
-from citry import Markup, SlotInput, merge_attrs
+from citry import LibraryComponent, Markup, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import NOT_PROVIDED, NavVariant
 from citry_bootstrap.text import slugify
 
@@ -18,7 +17,7 @@ class TabContext(NamedTuple):
     enabled: bool
 
 
-class TabContainer(BootstrapComponent):
+class TabContainer(LibraryComponent):
     name = "bs-tab-container"
 
     class Kwargs:
@@ -48,7 +47,7 @@ class TabContainer(BootstrapComponent):
     """
 
 
-class TabContent(BootstrapComponent):
+class TabContent(LibraryComponent):
     name = "bs-tab-content"
 
     class Kwargs:
@@ -73,7 +72,7 @@ class TabContent(BootstrapComponent):
     """
 
 
-class TabPane(BootstrapComponent):
+class TabPane(LibraryComponent):
     name = "bs-tab-pane"
 
     class Kwargs:
@@ -133,7 +132,7 @@ class TabPane(BootstrapComponent):
     """
 
 
-class TabsRenderer(BootstrapComponent):
+class TabsRenderer(LibraryComponent):
     name = "bs-tabs-renderer"
 
     class Kwargs:
@@ -178,7 +177,7 @@ class TabsRenderer(BootstrapComponent):
     """
 
 
-class Tabs(BootstrapComponent):
+class Tabs(LibraryComponent):
     name = "bs-tabs"
 
     class Kwargs:
@@ -239,7 +238,7 @@ class Tabs(BootstrapComponent):
         )
 
 
-class Tab(BootstrapComponent):
+class Tab(LibraryComponent):
     name = "bs-tab"
 
     class Kwargs:

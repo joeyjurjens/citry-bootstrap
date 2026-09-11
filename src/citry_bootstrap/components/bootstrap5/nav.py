@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     AnchorOrButton,
@@ -10,7 +9,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Nav(BootstrapComponent):
+class Nav(LibraryComponent):
     name = "bs-nav"
 
     class Kwargs:
@@ -61,7 +60,7 @@ class Nav(BootstrapComponent):
     """
 
 
-class NavItem(BootstrapComponent):
+class NavItem(LibraryComponent):
     name = "bs-nav-item"
 
     class Kwargs:
@@ -86,7 +85,7 @@ class NavItem(BootstrapComponent):
     """
 
 
-class NavLink(BootstrapComponent):
+class NavLink(LibraryComponent):
     name = "bs-nav-link"
 
     class Kwargs:

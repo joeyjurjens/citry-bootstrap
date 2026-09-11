@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Size
 
 
-class InputGroup(BootstrapComponent):
+class InputGroup(LibraryComponent):
     name = "bs-input-group"
 
     class Kwargs:
@@ -36,7 +35,7 @@ class InputGroup(BootstrapComponent):
     """
 
 
-class InputGroupText(BootstrapComponent):
+class InputGroupText(LibraryComponent):
     name = "bs-input-group-text"
 
     class Kwargs:
@@ -59,7 +58,7 @@ class InputGroupText(BootstrapComponent):
     """
 
 
-class InputGroupRadio(BootstrapComponent):
+class InputGroupRadio(LibraryComponent):
     name = "bs-input-group-radio"
 
     class Kwargs:
@@ -81,7 +80,7 @@ class InputGroupRadio(BootstrapComponent):
     """
 
 
-class InputGroupCheckbox(BootstrapComponent):
+class InputGroupCheckbox(LibraryComponent):
     name = "bs-input-group-checkbox"
 
     class Kwargs:
@@ -103,7 +102,7 @@ class InputGroupCheckbox(BootstrapComponent):
     """
 
 
-class FloatingLabel(BootstrapComponent):
+class FloatingLabel(LibraryComponent):
     name = "bs-floating-label"
 
     class Kwargs:

@@ -1,9 +1,7 @@
-from citry import merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, merge_attrs
 
 
-class Image(BootstrapComponent):
+class Image(LibraryComponent):
     name = "bs-image"
 
     class Kwargs:

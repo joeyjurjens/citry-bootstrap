@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import OverlayPlacement, TriggerEvent
 
 
-class Popover(BootstrapComponent):
+class Popover(LibraryComponent):
     name = "bs-popover"
 
     class Kwargs:

@@ -1,8 +1,7 @@
 from typing import Literal
 
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     FormCheckType,
@@ -10,7 +9,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Form(BootstrapComponent):
+class Form(LibraryComponent):
     name = "bs-form"
 
     class Kwargs:
@@ -41,7 +40,7 @@ class Form(BootstrapComponent):
     """
 
 
-class FormGroup(BootstrapComponent):
+class FormGroup(LibraryComponent):
     name = "bs-form-group"
 
     class Kwargs:
@@ -70,7 +69,7 @@ class FormGroup(BootstrapComponent):
     """
 
 
-class FormLabel(BootstrapComponent):
+class FormLabel(LibraryComponent):
     name = "bs-form-label"
 
     class Kwargs:
@@ -103,7 +102,7 @@ class FormLabel(BootstrapComponent):
     """
 
 
-class FormControl(BootstrapComponent):
+class FormControl(LibraryComponent):
     name = "bs-form-control"
 
     class Kwargs:
@@ -190,7 +189,7 @@ class FormControl(BootstrapComponent):
     """
 
 
-class FormTextarea(BootstrapComponent):
+class FormTextarea(LibraryComponent):
     name = "bs-form-textarea"
 
     class Kwargs:
@@ -251,7 +250,7 @@ class FormTextarea(BootstrapComponent):
     """
 
 
-class FormSelect(BootstrapComponent):
+class FormSelect(LibraryComponent):
     name = "bs-form-select"
 
     class Kwargs:
@@ -307,7 +306,7 @@ class FormSelect(BootstrapComponent):
     """
 
 
-class FormCheckInput(BootstrapComponent):
+class FormCheckInput(LibraryComponent):
     name = "bs-form-check-input"
 
     class Kwargs:
@@ -382,7 +381,7 @@ class FormCheckInput(BootstrapComponent):
     """
 
 
-class FormCheckLabel(BootstrapComponent):
+class FormCheckLabel(LibraryComponent):
     name = "bs-form-check-label"
 
     class Kwargs:
@@ -418,7 +417,7 @@ class FormCheckLabel(BootstrapComponent):
     """
 
 
-class FormCheck(BootstrapComponent):
+class FormCheck(LibraryComponent):
     name = "bs-form-check"
 
     class Kwargs:
@@ -488,7 +487,7 @@ class FormCheck(BootstrapComponent):
     """
 
 
-class FormText(BootstrapComponent):
+class FormText(LibraryComponent):
     name = "bs-form-text"
 
     class Kwargs:
@@ -511,7 +510,7 @@ class FormText(BootstrapComponent):
     """
 
 
-class FormFloating(BootstrapComponent):
+class FormFloating(LibraryComponent):
     name = "bs-form-floating"
 
     class Kwargs:

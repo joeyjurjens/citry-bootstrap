@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     Size,
@@ -9,7 +8,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class ToggleButtonGroup(BootstrapComponent):
+class ToggleButtonGroup(LibraryComponent):
     name = "bs-toggle-button-group"
 
     class Kwargs:
@@ -47,7 +46,7 @@ class ToggleButtonGroup(BootstrapComponent):
     """
 
 
-class ToggleButton(BootstrapComponent):
+class ToggleButton(LibraryComponent):
     name = "bs-toggle-button"
 
     class Kwargs:

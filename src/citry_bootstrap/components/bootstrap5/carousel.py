@@ -1,6 +1,5 @@
-from citry import Markup, SlotInput, merge_attrs
+from citry import LibraryComponent, Markup, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     CarouselPause,
@@ -14,7 +13,7 @@ def _sibling(component, own, wanted):
     return component.citry.get(component.name.removesuffix(own) + wanted)
 
 
-class Carousel(BootstrapComponent):
+class Carousel(LibraryComponent):
     name = "bs-carousel"
 
     class Kwargs:
@@ -84,7 +83,7 @@ class Carousel(BootstrapComponent):
         )
 
 
-class CarouselRenderer(BootstrapComponent):
+class CarouselRenderer(LibraryComponent):
     name = "bs-carousel-renderer"
 
     class Kwargs:
@@ -180,7 +179,7 @@ class CarouselRenderer(BootstrapComponent):
     """
 
 
-class CarouselItem(BootstrapComponent):
+class CarouselItem(LibraryComponent):
     name = "bs-carousel-item"
 
     class Kwargs:
@@ -231,7 +230,7 @@ class CarouselItem(BootstrapComponent):
         return None
 
 
-class CarouselCaption(BootstrapComponent):
+class CarouselCaption(LibraryComponent):
     name = "bs-carousel-caption"
 
     class Kwargs:
@@ -254,7 +253,7 @@ class CarouselCaption(BootstrapComponent):
     """
 
 
-class CarouselIndicator(BootstrapComponent):
+class CarouselIndicator(LibraryComponent):
     name = "bs-carousel-indicator"
 
     class Kwargs:

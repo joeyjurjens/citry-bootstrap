@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     ListGroupItemTag,
     ListGroupTag,
@@ -9,7 +8,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class ListGroup(BootstrapComponent):
+class ListGroup(LibraryComponent):
     name = "bs-list-group"
 
     class Kwargs:
@@ -51,7 +50,7 @@ class ListGroup(BootstrapComponent):
     """
 
 
-class ListGroupItem(BootstrapComponent):
+class ListGroupItem(LibraryComponent):
     name = "bs-list-group-item"
 
     class Kwargs:

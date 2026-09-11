@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Variant
 
 
-class Progress(BootstrapComponent):
+class Progress(LibraryComponent):
     name = "bs-progress"
 
     class Kwargs:
@@ -53,7 +52,7 @@ class Progress(BootstrapComponent):
     """
 
 
-class ProgressStacked(BootstrapComponent):
+class ProgressStacked(LibraryComponent):
     name = "bs-progress-stacked"
 
     class Kwargs:
@@ -76,7 +75,7 @@ class ProgressStacked(BootstrapComponent):
     """
 
 
-class ProgressBar(BootstrapComponent):
+class ProgressBar(LibraryComponent):
     name = "bs-progress-bar"
 
     class Kwargs:

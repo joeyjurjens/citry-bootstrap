@@ -1,10 +1,9 @@
-from citry import merge_attrs
+from citry import LibraryComponent, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import BgColor, Size, Variant
 
 
-class Placeholder(BootstrapComponent):
+class Placeholder(LibraryComponent):
     name = "bs-placeholder"
 
     class Kwargs:
@@ -43,7 +42,7 @@ class Placeholder(BootstrapComponent):
     """
 
 
-class PlaceholderButton(BootstrapComponent):
+class PlaceholderButton(LibraryComponent):
     name = "bs-placeholder-button"
 
     class Kwargs:

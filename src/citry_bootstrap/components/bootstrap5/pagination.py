@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Size
 
 
-class Pagination(BootstrapComponent):
+class Pagination(LibraryComponent):
     name = "bs-pagination"
 
     class Kwargs:
@@ -38,7 +37,7 @@ class Pagination(BootstrapComponent):
     """
 
 
-class PaginationItem(BootstrapComponent):
+class PaginationItem(LibraryComponent):
     name = "bs-pagination-item"
 
     class Kwargs:
@@ -88,7 +87,7 @@ class PageItem(PaginationItem):
     pass
 
 
-class PageLink(BootstrapComponent):
+class PageLink(LibraryComponent):
     name = "bs-page-link"
 
     class Kwargs:
@@ -119,7 +118,7 @@ class PageLink(BootstrapComponent):
     """
 
 
-class PaginationFirst(BootstrapComponent):
+class PaginationFirst(LibraryComponent):
     name = "bs-pagination-first"
 
     class Kwargs:
@@ -156,7 +155,7 @@ class PaginationFirst(BootstrapComponent):
     """
 
 
-class PaginationPrev(BootstrapComponent):
+class PaginationPrev(LibraryComponent):
     name = "bs-pagination-prev"
 
     class Kwargs:
@@ -193,7 +192,7 @@ class PaginationPrev(BootstrapComponent):
     """
 
 
-class PaginationNext(BootstrapComponent):
+class PaginationNext(LibraryComponent):
     name = "bs-pagination-next"
 
     class Kwargs:
@@ -230,7 +229,7 @@ class PaginationNext(BootstrapComponent):
     """
 
 
-class PaginationLast(BootstrapComponent):
+class PaginationLast(LibraryComponent):
     name = "bs-pagination-last"
 
     class Kwargs:
@@ -267,7 +266,7 @@ class PaginationLast(BootstrapComponent):
     """
 
 
-class PaginationEllipsis(BootstrapComponent):
+class PaginationEllipsis(LibraryComponent):
     name = "bs-pagination-ellipsis"
 
     class Kwargs:

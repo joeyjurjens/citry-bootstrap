@@ -1,9 +1,7 @@
-from citry import SlotInput, merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, SlotInput, merge_attrs
 
 
-class Breadcrumb(BootstrapComponent):
+class Breadcrumb(LibraryComponent):
     name = "bs-breadcrumb"
 
     class Kwargs:
@@ -30,7 +28,7 @@ class Breadcrumb(BootstrapComponent):
     """
 
 
-class BreadcrumbItem(BootstrapComponent):
+class BreadcrumbItem(LibraryComponent):
     name = "bs-breadcrumb-item"
 
     class Kwargs:

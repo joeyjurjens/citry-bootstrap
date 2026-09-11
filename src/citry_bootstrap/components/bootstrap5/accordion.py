@@ -1,9 +1,7 @@
-from citry import SlotInput, merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, SlotInput, merge_attrs
 
 
-class Accordion(BootstrapComponent):
+class Accordion(LibraryComponent):
     name = "bs-accordion"
 
     class Kwargs:
@@ -41,7 +39,7 @@ class Accordion(BootstrapComponent):
     """
 
 
-class AccordionItem(BootstrapComponent):
+class AccordionItem(LibraryComponent):
     name = "bs-accordion-item"
 
     class Kwargs:
@@ -79,7 +77,7 @@ class AccordionItem(BootstrapComponent):
     """
 
 
-class AccordionButton(BootstrapComponent):
+class AccordionButton(LibraryComponent):
     name = "bs-accordion-button"
 
     class Kwargs:
@@ -126,7 +124,7 @@ class AccordionButton(BootstrapComponent):
     """
 
 
-class AccordionHeader(BootstrapComponent):
+class AccordionHeader(LibraryComponent):
     name = "bs-accordion-header"
 
     class Kwargs:
@@ -158,7 +156,7 @@ class AccordionHeader(BootstrapComponent):
     """
 
 
-class AccordionBody(BootstrapComponent):
+class AccordionBody(LibraryComponent):
     name = "bs-accordion-body"
 
     class Kwargs:

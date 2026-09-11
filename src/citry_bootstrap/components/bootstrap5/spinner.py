@@ -1,10 +1,9 @@
-from citry import merge_attrs
+from citry import LibraryComponent, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Size, SpinnerVariant, Variant
 
 
-class Spinner(BootstrapComponent):
+class Spinner(LibraryComponent):
     name = "bs-spinner"
 
     class Kwargs:

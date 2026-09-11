@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     AnchorOrSpan,
     Breakpoint,
@@ -10,7 +9,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Navbar(BootstrapComponent):
+class Navbar(LibraryComponent):
     name = "bs-navbar"
 
     class Kwargs:
@@ -76,7 +75,7 @@ class Navbar(BootstrapComponent):
     """
 
 
-class NavbarBrand(BootstrapComponent):
+class NavbarBrand(LibraryComponent):
     name = "bs-navbar-brand"
 
     class Kwargs:
@@ -112,7 +111,7 @@ class NavbarBrand(BootstrapComponent):
     """
 
 
-class NavbarToggler(BootstrapComponent):
+class NavbarToggler(LibraryComponent):
     name = "bs-navbar-toggler"
 
     class Kwargs:
@@ -157,7 +156,7 @@ class NavbarToggler(BootstrapComponent):
     """
 
 
-class NavbarCollapse(BootstrapComponent):
+class NavbarCollapse(LibraryComponent):
     name = "bs-navbar-collapse"
 
     class Kwargs:
@@ -188,7 +187,7 @@ class NavbarCollapse(BootstrapComponent):
     """
 
 
-class NavbarNav(BootstrapComponent):
+class NavbarNav(LibraryComponent):
     name = "bs-navbar-nav"
 
     class Kwargs:
@@ -217,7 +216,7 @@ class NavbarNav(BootstrapComponent):
     """
 
 
-class NavbarText(BootstrapComponent):
+class NavbarText(LibraryComponent):
     name = "bs-navbar-text"
 
     class Kwargs:

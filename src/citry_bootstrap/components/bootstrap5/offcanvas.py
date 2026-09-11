@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     BackdropBehavior,
     Breakpoint,
@@ -10,7 +9,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Offcanvas(BootstrapComponent):
+class Offcanvas(LibraryComponent):
     name = "bs-offcanvas"
 
     class Kwargs:
@@ -61,7 +60,7 @@ class Offcanvas(BootstrapComponent):
     """
 
 
-class OffcanvasHeader(BootstrapComponent):
+class OffcanvasHeader(LibraryComponent):
     name = "bs-offcanvas-header"
 
     class Kwargs:
@@ -99,7 +98,7 @@ class OffcanvasHeader(BootstrapComponent):
     """
 
 
-class OffcanvasBody(BootstrapComponent):
+class OffcanvasBody(LibraryComponent):
     name = "bs-offcanvas-body"
 
     class Kwargs:
@@ -122,7 +121,7 @@ class OffcanvasBody(BootstrapComponent):
     """
 
 
-class OffcanvasTitle(BootstrapComponent):
+class OffcanvasTitle(LibraryComponent):
     name = "bs-offcanvas-title"
 
     class Kwargs:
@@ -154,7 +153,7 @@ class OffcanvasTitle(BootstrapComponent):
     """
 
 
-class OffcanvasToggle(BootstrapComponent):
+class OffcanvasToggle(LibraryComponent):
     name = "bs-offcanvas-toggle"
 
     class Kwargs:

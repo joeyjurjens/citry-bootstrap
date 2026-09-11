@@ -1,6 +1,5 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     BackdropBehavior,
     ButtonTag,
@@ -10,7 +9,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-class Modal(BootstrapComponent):
+class Modal(LibraryComponent):
     name = "bs-modal"
 
     class Kwargs:
@@ -91,7 +90,7 @@ class Modal(BootstrapComponent):
     """
 
 
-class ModalHeader(BootstrapComponent):
+class ModalHeader(LibraryComponent):
     name = "bs-modal-header"
 
     class Kwargs:
@@ -123,7 +122,7 @@ class ModalHeader(BootstrapComponent):
     """
 
 
-class ModalBody(BootstrapComponent):
+class ModalBody(LibraryComponent):
     name = "bs-modal-body"
 
     class Kwargs:
@@ -146,7 +145,7 @@ class ModalBody(BootstrapComponent):
     """
 
 
-class ModalFooter(BootstrapComponent):
+class ModalFooter(LibraryComponent):
     name = "bs-modal-footer"
 
     class Kwargs:
@@ -169,7 +168,7 @@ class ModalFooter(BootstrapComponent):
     """
 
 
-class ModalTitle(BootstrapComponent):
+class ModalTitle(LibraryComponent):
     name = "bs-modal-title"
 
     class Kwargs:
@@ -200,7 +199,7 @@ class ModalTitle(BootstrapComponent):
     """
 
 
-class ModalToggle(BootstrapComponent):
+class ModalToggle(LibraryComponent):
     name = "bs-modal-toggle"
 
     class Kwargs:

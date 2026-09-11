@@ -1,13 +1,12 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     BreakpointOrAuto,
     ContainerFluid,
 )
 
 
-class Container(BootstrapComponent):
+class Container(LibraryComponent):
     name = "bs-container"
 
     class Kwargs:
@@ -43,7 +42,7 @@ class Container(BootstrapComponent):
     """
 
 
-class Row(BootstrapComponent):
+class Row(LibraryComponent):
     name = "bs-row"
 
     class Kwargs:
@@ -100,7 +99,7 @@ class Row(BootstrapComponent):
     """
 
 
-class Col(BootstrapComponent):
+class Col(LibraryComponent):
     name = "bs-col"
 
     class Kwargs:

@@ -1,9 +1,7 @@
-from citry import SlotInput, merge_attrs
-
-from citry_bootstrap.component import BootstrapComponent
+from citry import LibraryComponent, SlotInput, merge_attrs
 
 
-class Figure(BootstrapComponent):
+class Figure(LibraryComponent):
     name = "bs-figure"
 
     class Kwargs:
@@ -26,7 +24,7 @@ class Figure(BootstrapComponent):
     """
 
 
-class FigureImage(BootstrapComponent):
+class FigureImage(LibraryComponent):
     name = "bs-figure-image"
 
     class Kwargs:
@@ -57,7 +55,7 @@ class FigureImage(BootstrapComponent):
     """
 
 
-class FigureCaption(BootstrapComponent):
+class FigureCaption(LibraryComponent):
     name = "bs-figure-caption"
 
     class Kwargs:

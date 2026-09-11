@@ -1,10 +1,9 @@
-from citry import SlotInput, merge_attrs
+from citry import LibraryComponent, SlotInput, merge_attrs
 
-from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import BgColor, Placement
 
 
-class ToastContainer(BootstrapComponent):
+class ToastContainer(LibraryComponent):
     name = "bs-toast-container"
 
     class Kwargs:
@@ -42,7 +41,7 @@ class ToastContainer(BootstrapComponent):
     """
 
 
-class Toast(BootstrapComponent):
+class Toast(LibraryComponent):
     name = "bs-toast"
 
     class Kwargs:
@@ -106,7 +105,7 @@ class Toast(BootstrapComponent):
     """
 
 
-class ToastHeader(BootstrapComponent):
+class ToastHeader(LibraryComponent):
     name = "bs-toast-header"
 
     class Kwargs:
@@ -138,7 +137,7 @@ class ToastHeader(BootstrapComponent):
     """
 
 
-class ToastBody(BootstrapComponent):
+class ToastBody(LibraryComponent):
     name = "bs-toast-body"
 
     class Kwargs:
