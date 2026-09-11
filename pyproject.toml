@@ -19,6 +19,11 @@ classifiers = [
 ]
 keywords = ["citry", "components", "bootstrap"]
 
+[project.urls]
+Documentation = "https://joeyjurjens.github.io/citry-bootstrap/"
+Repository = "https://github.com/joeyjurjens/citry-bootstrap"
+Issues = "https://github.com/joeyjurjens/citry-bootstrap/issues"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
