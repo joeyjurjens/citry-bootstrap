@@ -5,7 +5,9 @@ running `__post_init__` on the typed inputs, these fail rather than silently
 rendering `container-True`.
 """
 
+import dataclasses
 import re
+from typing import NamedTuple
 
 import pytest
 from citry import Citry, ComponentLibrary, is_const
@@ -72,3 +74,28 @@ def test_the_library_renders_constant_inputs_correctly(source, fragment):
     app = Citry(autodiscover=False)
     citry_bootstrap.install(app)
     assert fragment in app.render_template(source).serialize()
+
+
+@pytest.mark.parametrize(
+    ("declare", "reason"),
+    [
+        (
+            lambda: dataclasses.dataclass(type("Kwargs", (), {"__annotations__": {"a": int}})),
+            "dataclass",
+        ),
+        (lambda: NamedTuple("Kwargs", [("a", int)]), "NamedTuple"),
+    ],
+)
+def test_a_kwargs_form_that_cannot_be_unwrapped_is_refused(declare, reason):
+    """Silence here renders `container-True`; say it at import time instead."""
+    with pytest.raises(TypeError, match=reason):
+        type("Refused", (BootstrapComponent,), {"name": "refused", "Kwargs": declare()})
+
+
+def test_a_kwargs_class_shared_by_two_components_is_patched_once():
+    """Two components may name the same class; wrapping it twice would nest."""
+    shared = type("Kwargs", (), {"__annotations__": {"a": int}, "a": 0})
+    type("One", (BootstrapComponent,), {"name": "one", "Kwargs": shared})
+    first = shared.__post_init__
+    type("Two", (BootstrapComponent,), {"name": "two", "Kwargs": shared})
+    assert shared.__post_init__ is first
