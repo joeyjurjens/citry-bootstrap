@@ -1,24 +1,10 @@
-from types import SimpleNamespace
+from citry import merge_attrs
 
-from citry import LibraryComponent, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import BgColor, Size, Variant
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Placeholder(LibraryComponent):
+class Placeholder(BootstrapComponent):
     name = "bs-placeholder"
 
     class Kwargs:
@@ -30,7 +16,6 @@ class Placeholder(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         classes = ["placeholder"]
 
         if kwargs.size:
@@ -58,7 +43,7 @@ class Placeholder(LibraryComponent):
     """
 
 
-class PlaceholderButton(LibraryComponent):
+class PlaceholderButton(BootstrapComponent):
     name = "bs-placeholder-button"
 
     class Kwargs:
@@ -67,7 +52,6 @@ class PlaceholderButton(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         classes = ["btn", f"btn-{kwargs.variant}", "placeholder"]
 
         if kwargs.xs:

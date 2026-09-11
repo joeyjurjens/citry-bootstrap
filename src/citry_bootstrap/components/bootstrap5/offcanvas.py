@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     BackdropBehavior,
     Breakpoint,
@@ -11,20 +10,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Offcanvas(LibraryComponent):
+class Offcanvas(BootstrapComponent):
     name = "bs-offcanvas"
 
     class Kwargs:
@@ -40,7 +26,6 @@ class Offcanvas(LibraryComponent):
         toggle: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         offcanvas_id = (kwargs.attrs or {}).get("id") or f"offcanvas-{self.id}"
 
         if kwargs.responsive:
@@ -76,7 +61,7 @@ class Offcanvas(LibraryComponent):
     """
 
 
-class OffcanvasHeader(LibraryComponent):
+class OffcanvasHeader(BootstrapComponent):
     name = "bs-offcanvas-header"
 
     class Kwargs:
@@ -89,7 +74,6 @@ class OffcanvasHeader(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         try:
             offcanvas = self.inject("offcanvas")
             offcanvas_id = offcanvas.offcanvas_id
@@ -115,7 +99,7 @@ class OffcanvasHeader(LibraryComponent):
     """
 
 
-class OffcanvasBody(LibraryComponent):
+class OffcanvasBody(BootstrapComponent):
     name = "bs-offcanvas-body"
 
     class Kwargs:
@@ -125,7 +109,6 @@ class OffcanvasBody(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -139,7 +122,7 @@ class OffcanvasBody(LibraryComponent):
     """
 
 
-class OffcanvasTitle(LibraryComponent):
+class OffcanvasTitle(BootstrapComponent):
     name = "bs-offcanvas-title"
 
     class Kwargs:
@@ -150,7 +133,6 @@ class OffcanvasTitle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         offcanvas = self.inject("offcanvas")
         offcanvas_id = offcanvas.offcanvas_id
 
@@ -172,7 +154,7 @@ class OffcanvasTitle(LibraryComponent):
     """
 
 
-class OffcanvasToggle(LibraryComponent):
+class OffcanvasToggle(BootstrapComponent):
     name = "bs-offcanvas-toggle"
 
     class Kwargs:
@@ -183,7 +165,6 @@ class OffcanvasToggle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         offcanvas = self.inject("offcanvas")
         target_id = offcanvas.offcanvas_id
 

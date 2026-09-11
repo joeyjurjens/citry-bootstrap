@@ -65,6 +65,16 @@ citry_bootstrap.install(app, override={CardBody: MyCardBody})
 
 Yours is published under the same name, so every sibling renders it too - including `Card`, which builds its own body. The name follows `prefix`, so the two can be combined. Handing in something this library does not publish is an error rather than a silent no-op.
 
+## Constant inputs
+
+Citry marks a value it knows at parse time with a transparent proxy, so it can precompute the template expressions that read it. The proxy prints and compares like the value it wraps, but `x is True` is False and `re`, `str.join` and `os.fspath` reject it. Every component here is built on `BootstrapComponent`, which unwraps the typed input view once, so component code is ordinary Python. `raw_kwargs` keeps its markers, so citry loses nothing, and nothing outside this library is affected. Build your own component on the same base if you want the same:
+
+```python
+from citry_bootstrap import BootstrapComponent
+```
+
+[Citry issue #124](https://github.com/citry-dev/citry/issues/124) tracks handing component code plain values from the engine. The base class goes away when it does.
+
 ## Develop
 
 ```bash

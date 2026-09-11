@@ -1,24 +1,10 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Variant
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Progress(LibraryComponent):
+class Progress(BootstrapComponent):
     name = "bs-progress"
 
     class Kwargs:
@@ -30,7 +16,6 @@ class Progress(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["progress-stacked" if kwargs.stacked else "progress"]
         style = {}
         if kwargs.height:
@@ -68,7 +53,7 @@ class Progress(LibraryComponent):
     """
 
 
-class ProgressStacked(LibraryComponent):
+class ProgressStacked(BootstrapComponent):
     name = "bs-progress-stacked"
 
     class Kwargs:
@@ -78,7 +63,6 @@ class ProgressStacked(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -92,7 +76,7 @@ class ProgressStacked(LibraryComponent):
     """
 
 
-class ProgressBar(LibraryComponent):
+class ProgressBar(BootstrapComponent):
     name = "bs-progress-bar"
 
     class Kwargs:
@@ -109,7 +93,6 @@ class ProgressBar(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["progress-bar"]
 
         if kwargs.variant:

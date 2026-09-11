@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     AnchorOrSpan,
     Breakpoint,
@@ -11,20 +10,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Navbar(LibraryComponent):
+class Navbar(BootstrapComponent):
     name = "bs-navbar"
 
     class Kwargs:
@@ -39,7 +25,6 @@ class Navbar(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["navbar"]
 
         if kwargs.expand:
@@ -91,7 +76,7 @@ class Navbar(LibraryComponent):
     """
 
 
-class NavbarBrand(LibraryComponent):
+class NavbarBrand(BootstrapComponent):
     name = "bs-navbar-brand"
 
     class Kwargs:
@@ -103,7 +88,6 @@ class NavbarBrand(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "href": kwargs.href,
@@ -128,7 +112,7 @@ class NavbarBrand(LibraryComponent):
     """
 
 
-class NavbarToggler(LibraryComponent):
+class NavbarToggler(BootstrapComponent):
     name = "bs-navbar-toggler"
 
     class Kwargs:
@@ -138,7 +122,6 @@ class NavbarToggler(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         navbar = self.inject("navbar")
         target_id = navbar.navbar_collapse_id
 
@@ -174,7 +157,7 @@ class NavbarToggler(LibraryComponent):
     """
 
 
-class NavbarCollapse(LibraryComponent):
+class NavbarCollapse(BootstrapComponent):
     name = "bs-navbar-collapse"
 
     class Kwargs:
@@ -184,7 +167,6 @@ class NavbarCollapse(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         navbar = self.inject("navbar")
         collapse_id = navbar.navbar_collapse_id
 
@@ -206,7 +188,7 @@ class NavbarCollapse(LibraryComponent):
     """
 
 
-class NavbarNav(LibraryComponent):
+class NavbarNav(BootstrapComponent):
     name = "bs-navbar-nav"
 
     class Kwargs:
@@ -217,7 +199,6 @@ class NavbarNav(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["navbar-nav"]
         if kwargs.scroll:
             classes.append("navbar-nav-scroll")
@@ -236,7 +217,7 @@ class NavbarNav(LibraryComponent):
     """
 
 
-class NavbarText(LibraryComponent):
+class NavbarText(BootstrapComponent):
     name = "bs-navbar-text"
 
     class Kwargs:
@@ -246,7 +227,6 @@ class NavbarText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }

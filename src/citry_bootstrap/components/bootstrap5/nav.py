@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     AnchorOrButton,
@@ -11,20 +10,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Nav(LibraryComponent):
+class Nav(BootstrapComponent):
     name = "bs-nav"
 
     class Kwargs:
@@ -40,7 +26,6 @@ class Nav(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["nav"]
 
         if kwargs.variant == "tabs":
@@ -76,7 +61,7 @@ class Nav(LibraryComponent):
     """
 
 
-class NavItem(LibraryComponent):
+class NavItem(BootstrapComponent):
     name = "bs-nav-item"
 
     class Kwargs:
@@ -87,7 +72,6 @@ class NavItem(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs,
@@ -102,7 +86,7 @@ class NavItem(LibraryComponent):
     """
 
 
-class NavLink(LibraryComponent):
+class NavLink(BootstrapComponent):
     name = "bs-nav-link"
 
     class Kwargs:
@@ -117,7 +101,6 @@ class NavLink(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         tab_container = self.inject("tab_container", NOT_PROVIDED)
 
         is_active = kwargs.active

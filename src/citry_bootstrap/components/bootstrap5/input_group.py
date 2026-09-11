@@ -1,24 +1,10 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import Size
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class InputGroup(LibraryComponent):
+class InputGroup(BootstrapComponent):
     name = "bs-input-group"
 
     class Kwargs:
@@ -30,7 +16,6 @@ class InputGroup(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["input-group"]
         if kwargs.size:
             classes.append(f"input-group-{kwargs.size}")
@@ -51,7 +36,7 @@ class InputGroup(LibraryComponent):
     """
 
 
-class InputGroupText(LibraryComponent):
+class InputGroupText(BootstrapComponent):
     name = "bs-input-group-text"
 
     class Kwargs:
@@ -61,7 +46,6 @@ class InputGroupText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -75,14 +59,13 @@ class InputGroupText(LibraryComponent):
     """
 
 
-class InputGroupRadio(LibraryComponent):
+class InputGroupRadio(BootstrapComponent):
     name = "bs-input-group-radio"
 
     class Kwargs:
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -98,14 +81,13 @@ class InputGroupRadio(LibraryComponent):
     """
 
 
-class InputGroupCheckbox(LibraryComponent):
+class InputGroupCheckbox(BootstrapComponent):
     name = "bs-input-group-checkbox"
 
     class Kwargs:
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -121,7 +103,7 @@ class InputGroupCheckbox(LibraryComponent):
     """
 
 
-class FloatingLabel(LibraryComponent):
+class FloatingLabel(BootstrapComponent):
     name = "bs-floating-label"
 
     class Kwargs:
@@ -133,7 +115,6 @@ class FloatingLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "control_id": kwargs.control_id,
             "label": kwargs.label,

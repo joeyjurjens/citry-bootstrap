@@ -1,22 +1,9 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
-
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
+from citry_bootstrap.component import BootstrapComponent
 
 
-class Accordion(LibraryComponent):
+class Accordion(BootstrapComponent):
     name = "bs-accordion"
 
     class Kwargs:
@@ -28,7 +15,6 @@ class Accordion(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         accordion_id = (kwargs.attrs or {}).get("id") or f"accordion-{self.id}"
 
         css_classes = ["accordion"]
@@ -55,7 +41,7 @@ class Accordion(LibraryComponent):
     """
 
 
-class AccordionItem(LibraryComponent):
+class AccordionItem(BootstrapComponent):
     name = "bs-accordion-item"
 
     class Kwargs:
@@ -66,7 +52,6 @@ class AccordionItem(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         accordion = self.inject("accordion")
 
         item_id = (kwargs.attrs or {}).get("id") or f"accordion-item-{self.id}"
@@ -94,7 +79,7 @@ class AccordionItem(LibraryComponent):
     """
 
 
-class AccordionButton(LibraryComponent):
+class AccordionButton(BootstrapComponent):
     name = "bs-accordion-button"
 
     class Kwargs:
@@ -105,7 +90,6 @@ class AccordionButton(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         accordion_item = self.inject("accordion_item")
 
         classes = ["accordion-button"]
@@ -142,7 +126,7 @@ class AccordionButton(LibraryComponent):
     """
 
 
-class AccordionHeader(LibraryComponent):
+class AccordionHeader(BootstrapComponent):
     name = "bs-accordion-header"
 
     class Kwargs:
@@ -153,7 +137,6 @@ class AccordionHeader(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         accordion_item = self.inject("accordion_item")
 
         data = {
@@ -175,7 +158,7 @@ class AccordionHeader(LibraryComponent):
     """
 
 
-class AccordionBody(LibraryComponent):
+class AccordionBody(BootstrapComponent):
     name = "bs-accordion-body"
 
     class Kwargs:
@@ -185,7 +168,6 @@ class AccordionBody(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         accordion_item = self.inject("accordion_item")
 
         collapse_classes = ["accordion-collapse", "collapse"]

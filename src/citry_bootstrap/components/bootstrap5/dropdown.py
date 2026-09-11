@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     AlignmentStartEnd,
     AnchorOrButton,
@@ -14,20 +13,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Dropdown(LibraryComponent):
+class Dropdown(BootstrapComponent):
     name = "bs-dropdown"
 
     class Kwargs:
@@ -40,7 +26,6 @@ class Dropdown(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         dropdown_id = (kwargs.attrs or {}).get("id") or f"dropdown-{self.id}"
 
         if kwargs.centered:
@@ -77,7 +62,7 @@ class Dropdown(LibraryComponent):
     """
 
 
-class DropdownToggle(LibraryComponent):
+class DropdownToggle(BootstrapComponent):
     name = "bs-dropdown-toggle"
 
     class Kwargs:
@@ -92,7 +77,6 @@ class DropdownToggle(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         dropdown = self.inject("dropdown")
 
         classes = ["btn", f"btn-{kwargs.variant}", "dropdown-toggle"]
@@ -124,7 +108,7 @@ class DropdownToggle(LibraryComponent):
     """
 
 
-class DropdownMenu(LibraryComponent):
+class DropdownMenu(BootstrapComponent):
     name = "bs-dropdown-menu"
 
     class Kwargs:
@@ -142,7 +126,6 @@ class DropdownMenu(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["dropdown-menu"]
 
         if kwargs.align == "end":
@@ -180,7 +163,7 @@ class DropdownMenu(LibraryComponent):
     """
 
 
-class DropdownItem(LibraryComponent):
+class DropdownItem(BootstrapComponent):
     name = "bs-dropdown-item"
 
     class Kwargs:
@@ -194,7 +177,6 @@ class DropdownItem(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["dropdown-item"]
         if kwargs.active:
             classes.append("active")
@@ -247,14 +229,13 @@ class DropdownItem(LibraryComponent):
     """
 
 
-class DropdownDivider(LibraryComponent):
+class DropdownDivider(BootstrapComponent):
     name = "bs-dropdown-divider"
 
     class Kwargs:
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -266,7 +247,7 @@ class DropdownDivider(LibraryComponent):
     """
 
 
-class DropdownHeader(LibraryComponent):
+class DropdownHeader(BootstrapComponent):
     name = "bs-dropdown-header"
 
     class Kwargs:
@@ -277,7 +258,6 @@ class DropdownHeader(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs,
@@ -294,7 +274,7 @@ class DropdownHeader(LibraryComponent):
     """
 
 
-class DropdownItemText(LibraryComponent):
+class DropdownItemText(BootstrapComponent):
     name = "bs-dropdown-item-text"
 
     class Kwargs:
@@ -304,7 +284,6 @@ class DropdownItemText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }

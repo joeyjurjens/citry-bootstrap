@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import Markup, SlotInput, merge_attrs
 
-from citry import LibraryComponent, Markup, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     CarouselPause,
@@ -15,20 +14,7 @@ def _sibling(component, own, wanted):
     return component.citry.get(component.name.removesuffix(own) + wanted)
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Carousel(LibraryComponent):
+class Carousel(BootstrapComponent):
     name = "bs-carousel"
 
     class Kwargs:
@@ -47,7 +33,6 @@ class Carousel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         carousel_id = (kwargs.attrs or {}).get("id") or f"carousel-{self.id}"
         items = []
 
@@ -99,7 +84,7 @@ class Carousel(LibraryComponent):
         )
 
 
-class CarouselRenderer(LibraryComponent):
+class CarouselRenderer(BootstrapComponent):
     name = "bs-carousel-renderer"
 
     class Kwargs:
@@ -120,7 +105,6 @@ class CarouselRenderer(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["carousel", "slide"]
         if kwargs.fade:
             classes.append("carousel-fade")
@@ -196,7 +180,7 @@ class CarouselRenderer(LibraryComponent):
     """
 
 
-class CarouselItem(LibraryComponent):
+class CarouselItem(BootstrapComponent):
     name = "bs-carousel-item"
 
     class Kwargs:
@@ -208,7 +192,6 @@ class CarouselItem(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         carousel = self.inject("carousel")
 
         classes = ["carousel-item"]
@@ -248,7 +231,7 @@ class CarouselItem(LibraryComponent):
         return None
 
 
-class CarouselCaption(LibraryComponent):
+class CarouselCaption(BootstrapComponent):
     name = "bs-carousel-caption"
 
     class Kwargs:
@@ -258,7 +241,6 @@ class CarouselCaption(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -272,7 +254,7 @@ class CarouselCaption(LibraryComponent):
     """
 
 
-class CarouselIndicator(LibraryComponent):
+class CarouselIndicator(BootstrapComponent):
     name = "bs-carousel-indicator"
 
     class Kwargs:
@@ -281,7 +263,6 @@ class CarouselIndicator(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         carousel_data = self.inject("carousel", NOT_PROVIDED)
         carousel_id = carousel_data.carousel_id if carousel_data is not NOT_PROVIDED else ""
 

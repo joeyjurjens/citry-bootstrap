@@ -1,7 +1,6 @@
-from types import SimpleNamespace
+from citry import SlotInput, merge_attrs
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
-
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     Alignment,
     CardImgVariant,
@@ -9,20 +8,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Card(LibraryComponent):
+class Card(BootstrapComponent):
     name = "bs-card"
 
     class Kwargs:
@@ -38,7 +24,6 @@ class Card(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = ["card"]
         if kwargs.bg and not kwargs.text:
             classes.append(f"text-bg-{kwargs.bg}")
@@ -74,7 +59,7 @@ class Card(LibraryComponent):
     """
 
 
-class CardHeader(LibraryComponent):
+class CardHeader(BootstrapComponent):
     name = "bs-card-header"
 
     class Kwargs:
@@ -84,7 +69,6 @@ class CardHeader(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -98,7 +82,7 @@ class CardHeader(LibraryComponent):
     """
 
 
-class CardBody(LibraryComponent):
+class CardBody(BootstrapComponent):
     name = "bs-card-body"
 
     class Kwargs:
@@ -108,7 +92,6 @@ class CardBody(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -122,7 +105,7 @@ class CardBody(LibraryComponent):
     """
 
 
-class CardFooter(LibraryComponent):
+class CardFooter(BootstrapComponent):
     name = "bs-card-footer"
 
     class Kwargs:
@@ -132,7 +115,6 @@ class CardFooter(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -146,7 +128,7 @@ class CardFooter(LibraryComponent):
     """
 
 
-class CardTitle(LibraryComponent):
+class CardTitle(BootstrapComponent):
     name = "bs-card-title"
 
     class Kwargs:
@@ -157,7 +139,6 @@ class CardTitle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs,
@@ -172,7 +153,7 @@ class CardTitle(LibraryComponent):
     """
 
 
-class CardSubtitle(LibraryComponent):
+class CardSubtitle(BootstrapComponent):
     name = "bs-card-subtitle"
 
     class Kwargs:
@@ -183,7 +164,6 @@ class CardSubtitle(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "attrs": kwargs.attrs,
@@ -198,7 +178,7 @@ class CardSubtitle(LibraryComponent):
     """
 
 
-class CardText(LibraryComponent):
+class CardText(BootstrapComponent):
     name = "bs-card-text"
 
     class Kwargs:
@@ -208,7 +188,6 @@ class CardText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -222,7 +201,7 @@ class CardText(LibraryComponent):
     """
 
 
-class CardLink(LibraryComponent):
+class CardLink(BootstrapComponent):
     name = "bs-card-link"
 
     class Kwargs:
@@ -233,7 +212,6 @@ class CardLink(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "href": kwargs.href,
             "attrs": kwargs.attrs,
@@ -250,7 +228,7 @@ class CardLink(LibraryComponent):
     """
 
 
-class CardImg(LibraryComponent):
+class CardImg(BootstrapComponent):
     name = "bs-card-img"
 
     class Kwargs:
@@ -260,7 +238,6 @@ class CardImg(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         if kwargs.position == "top":
             img_class = "card-img-top"
         elif kwargs.position == "bottom":
@@ -285,7 +262,7 @@ class CardImg(LibraryComponent):
     """
 
 
-class CardImgOverlay(LibraryComponent):
+class CardImgOverlay(BootstrapComponent):
     name = "bs-card-img-overlay"
 
     class Kwargs:
@@ -295,7 +272,6 @@ class CardImgOverlay(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }
@@ -309,7 +285,7 @@ class CardImgOverlay(LibraryComponent):
     """
 
 
-class CardGroup(LibraryComponent):
+class CardGroup(BootstrapComponent):
     name = "bs-card-group"
 
     class Kwargs:
@@ -319,7 +295,6 @@ class CardGroup(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs,
         }

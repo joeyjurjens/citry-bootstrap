@@ -4,6 +4,7 @@ from collections.abc import Mapping
 
 from citry import Citry, ComponentLibrary, LibraryComponent, LibraryInstallation
 
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.accordion import (
     Accordion,
     AccordionBody,
@@ -314,6 +315,7 @@ def install(
 __all__ = [
     "install",
     "__citry_library__",
+    "BootstrapComponent",
     "Accordion",
     "AccordionItem",
     "AccordionButton",

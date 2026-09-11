@@ -1,8 +1,8 @@
-from types import SimpleNamespace
 from typing import Literal
 
-from citry import LibraryComponent, SlotInput, const_value, merge_attrs
+from citry import SlotInput, merge_attrs
 
+from citry_bootstrap.component import BootstrapComponent
 from citry_bootstrap.components.bootstrap5.types import (
     NOT_PROVIDED,
     FormCheckType,
@@ -10,20 +10,7 @@ from citry_bootstrap.components.bootstrap5.types import (
 )
 
 
-def _plain(kwargs):
-    """The component's inputs as ordinary Python values.
-
-    Citry marks a template constant with a transparent proxy. It compares and
-    stringifies like the value it wraps, but `re`, `os.fspath` and `str.join`
-    reject it and `x is True` is False. Unwrapping here rather than at the
-    engine's input hook leaves citry's own constness intact, so a cached
-    component stays cached.
-    """
-    fields = getattr(type(kwargs), "__slots__", None) or type(kwargs).__annotations__
-    return SimpleNamespace(**{name: const_value(getattr(kwargs, name)) for name in fields})
-
-
-class Form(LibraryComponent):
+class Form(BootstrapComponent):
     name = "bs-form"
 
     class Kwargs:
@@ -34,7 +21,6 @@ class Form(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         classes = []
         if kwargs.validated:
             classes.append("was-validated")
@@ -55,7 +41,7 @@ class Form(LibraryComponent):
     """
 
 
-class FormGroup(LibraryComponent):
+class FormGroup(BootstrapComponent):
     name = "bs-form-group"
 
     class Kwargs:
@@ -67,7 +53,6 @@ class FormGroup(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "tag": kwargs.as_,
             "control_id": kwargs.control_id,
@@ -85,7 +70,7 @@ class FormGroup(LibraryComponent):
     """
 
 
-class FormLabel(LibraryComponent):
+class FormLabel(BootstrapComponent):
     name = "bs-form-label"
 
     class Kwargs:
@@ -96,7 +81,6 @@ class FormLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         if formgroup is not NOT_PROVIDED:
             for_value = kwargs.for_ or formgroup.control_id
@@ -119,7 +103,7 @@ class FormLabel(LibraryComponent):
     """
 
 
-class FormControl(LibraryComponent):
+class FormControl(BootstrapComponent):
     name = "bs-form-control"
 
     class Kwargs:
@@ -152,7 +136,6 @@ class FormControl(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -207,7 +190,7 @@ class FormControl(LibraryComponent):
     """
 
 
-class FormTextarea(LibraryComponent):
+class FormTextarea(BootstrapComponent):
     name = "bs-form-textarea"
 
     class Kwargs:
@@ -224,7 +207,6 @@ class FormTextarea(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -269,7 +251,7 @@ class FormTextarea(LibraryComponent):
     """
 
 
-class FormSelect(LibraryComponent):
+class FormSelect(BootstrapComponent):
     name = "bs-form-select"
 
     class Kwargs:
@@ -286,7 +268,6 @@ class FormSelect(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         formgroup = self.inject("formgroup", NOT_PROVIDED)
         control_id = formgroup.control_id if formgroup is not NOT_PROVIDED else None
 
@@ -326,7 +307,7 @@ class FormSelect(LibraryComponent):
     """
 
 
-class FormCheckInput(LibraryComponent):
+class FormCheckInput(BootstrapComponent):
     name = "bs-form-check-input"
 
     class Kwargs:
@@ -340,7 +321,6 @@ class FormCheckInput(LibraryComponent):
         attrs: dict | None = None
 
     def template_data(self, kwargs: Kwargs, slots):
-        kwargs = _plain(kwargs)
         formcheck = self.inject("formcheck", NOT_PROVIDED)
         if formcheck is not NOT_PROVIDED:
             control_id = formcheck.control_id
@@ -402,7 +382,7 @@ class FormCheckInput(LibraryComponent):
     """
 
 
-class FormCheckLabel(LibraryComponent):
+class FormCheckLabel(BootstrapComponent):
     name = "bs-form-check-label"
 
     class Kwargs:
@@ -414,7 +394,6 @@ class FormCheckLabel(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         formcheck = self.inject("formcheck", NOT_PROVIDED)
         if formcheck is not NOT_PROVIDED:
             control_id = kwargs.for_ if kwargs.for_ else formcheck.control_id
@@ -439,7 +418,7 @@ class FormCheckLabel(LibraryComponent):
     """
 
 
-class FormCheck(LibraryComponent):
+class FormCheck(BootstrapComponent):
     name = "bs-form-check"
 
     class Kwargs:
@@ -460,7 +439,6 @@ class FormCheck(LibraryComponent):
         default: SlotInput | None = None
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         wrapper_classes = []
         if kwargs.type == "switch":
             wrapper_classes.append("form-check form-switch")
@@ -510,7 +488,7 @@ class FormCheck(LibraryComponent):
     """
 
 
-class FormText(LibraryComponent):
+class FormText(BootstrapComponent):
     name = "bs-form-text"
 
     class Kwargs:
@@ -520,7 +498,6 @@ class FormText(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs or {},
         }
@@ -534,7 +511,7 @@ class FormText(LibraryComponent):
     """
 
 
-class FormFloating(LibraryComponent):
+class FormFloating(BootstrapComponent):
     name = "bs-form-floating"
 
     class Kwargs:
@@ -544,7 +521,6 @@ class FormFloating(LibraryComponent):
         default: SlotInput
 
     def template_data(self, kwargs: Kwargs, slots: Slots):
-        kwargs = _plain(kwargs)
         data = {
             "attrs": kwargs.attrs or {},
         }
