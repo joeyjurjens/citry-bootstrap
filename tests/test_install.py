@@ -6,7 +6,7 @@ from citry_bootstrap.components.bootstrap5.card import CardBody
 
 
 def engine(**kwargs):
-    app = Citry(autodiscover=False, extensions=[citry_bootstrap.PlainInputs])
+    app = Citry(autodiscover=False)
     citry_bootstrap.install(app, **kwargs)
     return app
 

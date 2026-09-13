@@ -7,7 +7,7 @@ requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
-    "citry>=0.5.0",
+    "citry>=0.5.1",
 ]
 authors = [
     { name = "Joey Jurjens", email = "joeyjurjens@gmail.com" }
