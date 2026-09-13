@@ -35,7 +35,6 @@ def engine() -> Citry:
     app = Citry(
         autodiscover=False,
         id_generator=lambda: f"ctest{next(ids):02d}",
-        extensions=[citry_bootstrap.PlainInputs],
     )
     citry_bootstrap.install(app)
     return app
@@ -95,7 +94,7 @@ def index(names: list[str]) -> str:
         "## Install\n",
         "```bash\npip install citry-bootstrap\n```\n",
         "```python\nimport citry_bootstrap\nfrom citry import Citry\n\n"
-        "app = Citry(extensions=[citry_bootstrap.PlainInputs])\n"
+        "app = Citry()\n"
         "citry_bootstrap.install(app)\n```\n",
         "## Components\n",
     ]

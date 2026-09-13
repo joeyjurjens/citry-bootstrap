@@ -16,7 +16,7 @@ pip install citry-bootstrap
 import citry_bootstrap
 from citry import Citry
 
-app = Citry(extensions=[citry_bootstrap.PlainInputs])
+app = Citry()
 citry_bootstrap.install(app)
 ```
 
@@ -64,14 +64,6 @@ citry_bootstrap.install(app, override={CardBody: MyCardBody})
 ```
 
 Yours is published under the same name, so every sibling renders it too - including `Card`, which builds its own body. The name follows `prefix`, so the two can be combined. Handing in something this library does not publish is an error rather than a silent no-op.
-
-## Constant inputs
-
-Citry marks a value it knows at parse time with a transparent proxy, so it can precompute the template expressions that read it. The proxy prints and compares like the value it wraps, but `x is True` and `x is None` are silently False and `re`, `str.join` and `os.fspath` reject it. These components were translated from django-components, which has no such marker, so they read their inputs as ordinary Python.
-
-`PlainInputs` takes the proxy off before citry builds the typed `Kwargs`, and marks the pass-through values again before citry looks for its constants, so the engine optimizes exactly what it would have without it. Registration refuses an engine that does not have it, because the failure it prevents is silent: `c-fluid="True"` would render `container-True`.
-
-[Citry issue #107](https://github.com/citry-dev/citry/issues/107) tracks handing component code plain values from the engine. This goes away when it does.
 
 ## Develop
 

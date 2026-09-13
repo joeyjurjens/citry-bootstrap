@@ -12,7 +12,7 @@ pip install citry-bootstrap
 import citry_bootstrap
 from citry import Citry
 
-app = Citry(extensions=[citry_bootstrap.PlainInputs])
+app = Citry()
 citry_bootstrap.install(app)
 ```
 
